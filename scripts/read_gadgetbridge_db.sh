@@ -31,6 +31,6 @@
 DB=$1
 
 sqlite3 $DB <<EOF
-.separator "\t"
+.separator " "
 SELECT * FROM MI_BAND_ACTIVITY_SAMPLE;
 EOF
