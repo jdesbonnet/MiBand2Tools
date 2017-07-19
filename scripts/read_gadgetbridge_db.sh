@@ -21,9 +21,13 @@
 # Column 3: user id
 # Column 4: raw intensity
 # Column 5: steps
-# Column 6: raw kind (activity flags: bit field, TODO)
+# Column 6: raw kind (activity flags: bit field, bit5=sleep?)
 # Column 7: heart rate (bpm) or 255 if no measurement
 #
+#
+# Raw Kind (col 6):
+# value   6 : not worn or charging?
+# value 112 : sleeping
 # 
 # Joe Desbonnet
 # 2 July 2017
