@@ -26,8 +26,9 @@
 #
 #
 # Raw Kind (col 6):
-# value   6 : not worn or charging?
+# value   6 : charging?
 # value 112 : sleeping
+# value 115 : not worn
 # 
 # Joe Desbonnet
 # 2 July 2017
