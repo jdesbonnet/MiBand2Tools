@@ -11,11 +11,11 @@ set output "sleep_summary.png"
 set multiplot layout 2, 1  title "Sleep summary (data from Mi Band 2)" font ",24"
 
 set tmargin 0.5
-set bmargin 3
+set bmargin 1
 set lmargin 10
 
 
-set grid
+set grid ytics noxtics
 set xdata time
 #set timefmt "%Y%m%d"
 set timefmt "%s"
@@ -25,22 +25,28 @@ set format x "%d/%m\n%a"
 # 
 # Heart rate plot
 #
+#set size 1.0,0.3
+#set origin 0,0.7
+
 #set xrange ["20170623":"20170730"]
 
 set ylabel "beats per minute"
-plot 'sleep.dat' using (timecolumn(1)+100000):5:6:xtic(strftime("%d\n%m", strptime("%Y%m%d", strcol(2)))) with errorbars linewidth 2 title "heart rate / standard deviation"
+set format x ""
+plot 'sleep.dat' using (timecolumn(1)+100000):5:6:xtic("") with errorbars linewidth 2 title "heart rate / standard deviation"
 
-#set xrange ["1498194000":"1501390800"]
-#plot 'sleep.dat' using (timecolumn(1)+100000):5:6 with errorbars linewidth 2 title "heart rate / standard deviation"
 
+
+set bmargin 3
 
 # 
 # Sleep hours
 # 
+#set size 1.0,0.7
 unset xdata
 #set xrange restore
 #set xrange ["1498194000":"1501390800"]
 
+#set xlabel "Date"
 set ylabel "hours"
 set style data histograms
 set style histogram rowstacked

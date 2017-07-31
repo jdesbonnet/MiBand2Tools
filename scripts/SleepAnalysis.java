@@ -42,13 +42,16 @@ public class SleepAnalysis {
 			date = df.format(time*1000);
 			hour = Integer.parseInt(hf.format(time*1000));
 
-			if (!date.equals(lastDate)) {
+			if (!date.equals(lastDate) && lastDate.length()>0) {
 				double mainSleepHours = (double)mainSleep / 60.0;
 				double napSleepHours = (double)napSleep / 60.0;
 				double n = (double)hr_count;
 				double hr_mean = (double)sigma_hr / n;
 				double hr_sd = Math.sqrt( (sigma_hr2 - (sigma_hr*sigma_hr)/n) / (n-1) );
-				System.out.println (lastDate 
+				System.out.println (
+					(df.parse(lastDate).getTime()/1000 + 6*3600)
+					+ " " + lastDate 
+					 
 					+ " " + String.format("%.1f",mainSleepHours)
 					+ " " + String.format("%.1f",napSleepHours)
 					+ " " + String.format("%.1f",hr_mean)
