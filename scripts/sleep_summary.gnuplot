@@ -22,6 +22,8 @@ set style histogram rowstacked
 set boxwidth 1 relative
 set style fill solid 1.0 border -1
 
-plot 'sleep.dat' using 2:xtic(1) title 'main sleep','' using 3 title 'nap' lt 3
+#plot 'sleep.dat' using 2:xtic(1) title 'main sleep','' using 3 title 'nap' lt 3
 
+plot 'sleep.dat' using 2:xtic(strftime("%d\n%m", strptime("%Y%m%d", strcol(1)))) title 'main sleep' fc rgb 'blue',\
+     '' using 3 title 'nap' fillcolor rgb 'orange'
 
