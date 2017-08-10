@@ -31,3 +31,7 @@ plot 't.dat' using 1:((\$7<40||\$7>150)?NaN:\$7) with linespoints title "Sleepin
 #plot 't.dat' using 1:7 with linespoints title "Sleeping heart rate (bpm)" , '' using 1:4 with impulses lt 3 title 'Activity'
 
 EOF
+
+java SleepAnalysis miband2.dat > sleep.dat
+gnuplot sleep_summary.gnuplot
+
