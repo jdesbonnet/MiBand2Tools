@@ -20,10 +20,12 @@ public class SleepAnalysis {
 
 
 		String line,date,lastDate="";
-		int activity,mainSleep=0,napSleep=0, hour;
-		int hr;
+		int activityType,mainSleep=0,napSleep=0, hour;
+		int intensity, steps, hr;
 		int sigma_hr = 0;
 		int sigma_hr2 = 0;
+		int sigma_intensity = 0;
+
 		int hr_min = 999;
 		int hr_max = 0;
 		int hr_count = 0;
@@ -43,11 +45,13 @@ public class SleepAnalysis {
 			hour = Integer.parseInt(hf.format(time*1000));
 
 			if (!date.equals(lastDate) && lastDate.length()>0) {
+				// MiBand records are every 1 minute
 				double mainSleepHours = (double)mainSleep / 60.0;
 				double napSleepHours = (double)napSleep / 60.0;
 				double n = (double)hr_count;
 				double hr_mean = (double)sigma_hr / n;
 				double hr_sd = Math.sqrt( (sigma_hr2 - (sigma_hr*sigma_hr)/n) / (n-1) );
+				double meanSleepIntensity = mainSleep == 0 ? 0 : (double)sigma_intensity / (double)mainSleep;
 				System.out.println (
 					(df.parse(lastDate).getTime()/1000 + 6*3600)
 					+ " " + lastDate 
@@ -58,21 +62,27 @@ public class SleepAnalysis {
 					+ " " + String.format("%.2f",hr_sd)
 					+ " " + hr_min
 					+ " " + hr_max
+					+ " " + String.format("%.2f", meanSleepIntensity)
 				);
 				mainSleep = napSleep = 0;
 				sigma_hr = sigma_hr2 = 0;
 				hr_count = 0;
 				hr_min = 999;
 				hr_max = 0;
+				sigma_intensity = 0;
 			}
 
-			activity = Integer.parseInt(p[5]);
+			intensity = Integer.parseInt(p[3]);
+			steps = Integer.parseInt(p[4]);
+
+			activityType = Integer.parseInt(p[5]);
 			hr = Integer.parseInt(p[6]);
 
-			if (activity == SLEEP) {
+			if (activityType == SLEEP) {
 				if (hour < 12) {
 					mainSleep++;
 					if (hr != 255) {
+						// Measure mean and stddev heart rate during main sleep
 						sigma_hr += hr;
 						sigma_hr2 += hr*hr;
 						if (hr > hr_max) {
@@ -83,6 +93,7 @@ public class SleepAnalysis {
 						}
 						hr_count++;
 					}
+					sigma_intensity += intensity;
 				} else {
 					napSleep++;
 				}

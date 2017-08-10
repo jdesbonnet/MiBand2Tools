@@ -8,7 +8,7 @@ set terminal pngcairo size 1400,600
 set output "sleep_summary.png"
 
 #set title "Sleep summary (data from Mi Band 2)"
-set multiplot layout 2, 1  title "Sleep summary (data from Mi Band 2)" font ",24"
+set multiplot layout 3, 1  title "Sleep summary (data from Mi Band 2)" font ",18"
 
 set tmargin 0.5
 set bmargin 1
@@ -32,8 +32,20 @@ set format x "%d/%m\n%a"
 
 set ylabel "beats per minute"
 set format x ""
-plot 'sleep.dat' using (timecolumn(1)+100000):5:6:xtic("") with errorbars linewidth 2 title "heart rate / standard deviation"
+plot 'sleep.dat' using (timecolumn(1)+100000):5:6:xtic("") with errorbars linewidth 2 title "sleeping heart rate / standard deviation"
 
+
+
+#
+# Seeping activity
+#
+
+unset xdata
+set ylabel "mean activity"
+set style data histograms
+set boxwidth 1 relative
+set style fill solid 1.0 border -1
+plot 'sleep.dat' using 9:xtic("") title 'mean sleep activity' fillcolor rgb "#6020ff"
 
 
 set bmargin 3
