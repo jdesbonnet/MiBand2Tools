@@ -25,6 +25,7 @@ public class SleepAnalysis {
 		int sigma_hr = 0;
 		int sigma_hr2 = 0;
 		int sigma_intensity = 0;
+		int sigma_steps = 0;
 
 		int hr_min = 999;
 		int hr_max = 0;
@@ -63,6 +64,7 @@ public class SleepAnalysis {
 					+ " " + hr_min
 					+ " " + hr_max
 					+ " " + String.format("%.2f", meanSleepIntensity)
+					+ " " + sigma_steps
 				);
 				mainSleep = napSleep = 0;
 				sigma_hr = sigma_hr2 = 0;
@@ -70,6 +72,7 @@ public class SleepAnalysis {
 				hr_min = 999;
 				hr_max = 0;
 				sigma_intensity = 0;
+				sigma_steps = 0;
 			}
 
 			intensity = Integer.parseInt(p[3]);
@@ -77,6 +80,8 @@ public class SleepAnalysis {
 
 			activityType = Integer.parseInt(p[5]);
 			hr = Integer.parseInt(p[6]);
+
+			sigma_steps += steps;
 
 			if (activityType == SLEEP) {
 				if (hour < 12) {
