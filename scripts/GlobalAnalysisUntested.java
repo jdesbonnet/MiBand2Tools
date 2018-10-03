@@ -2,9 +2,7 @@ import java.io.*;
 import java.text.*;
 
 /**
- * Analyze MiBand2 data, make table of sleep (main sleep and naps)
- * grouped by day. Main sleep is sleep counted betweeen 00:00 and
- * 12:00, naps at any other time of day. 
+ * Analyze MiBand2 data, but globally; not just the sleep hours.
  */
 public class SleepAnalysis {
 
@@ -18,9 +16,8 @@ public class SleepAnalysis {
 
 	public static void main (String[] arg) throws Exception {
 
-
-		String line,date,lastDate="";
-		int activityType,mainSleep=0,napSleep=0, hour;
+		String line, date, lastDate = '';
+		int activityType, mainSleep = 0, napSleep = 0, hour;
 		int intensity, steps, hr;
 		int sigma_hr = 0;
 		int sigma_hr2 = 0;
@@ -84,30 +81,23 @@ public class SleepAnalysis {
 			sigma_steps += steps;
 
 			if (activityType == SLEEP) {
-				if (hour < 12) {
-					mainSleep++;
-					if (hr != 255) {
-						// Measure mean and stddev heart rate during main sleep
-						sigma_hr += hr;
-						sigma_hr2 += hr*hr;
-						if (hr > hr_max) {
-							hr_max = hr;
-						}
-						if (hr < hr_min) {
-							hr_min = hr;
-						}
-						hr_count++;
+				mainSleep++;
+				if (hr != 255) {
+					// Measure mean and stddev heart rate during main sleep
+					sigma_hr += hr;
+					sigma_hr2 += hr*hr;
+					if (hr > hr_max) {
+						hr_max = hr;
 					}
-					sigma_intensity += intensity;
-				} else {
-					napSleep++;
+					if (hr < hr_min) {
+						hr_min = hr;
+					}
+					hr_count++;
 				}
+				sigma_intensity += intensity;
 			}
-
 			lastDate = date;
-
 		}
-
 	}
 }
 

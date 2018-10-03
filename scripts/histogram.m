@@ -5,10 +5,9 @@
 # Command line:
 # octave histogram.m  data.dat > /dev/null
 #
-# Joe Desbonnet,
+# Original script by Joe Desbonnet,
 # jdesbonnet@gmail.com
-# 3 Jul 2017
-
+# July 3rd, 2017
 
 datain = argv(){1}
 dataout = argv(){2}
